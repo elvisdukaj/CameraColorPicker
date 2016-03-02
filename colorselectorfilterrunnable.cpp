@@ -20,23 +20,29 @@ QVideoFrame ColorSelectorFilterRunnable::run(QVideoFrame *input, const QVideoSur
             (pixelFormat != QVideoFrame::PixelFormat::Format_RGB32 ))
             return *input;
 
-        if (!input->map(QAbstractVideoBuffer::ReadWrite))
+        if (!input->map(QAbstractVideoBuffer::ReadOnly))
             return *input;
 
-        assert (input->mappedBytes() == input->height() * input->bytesPerLine());
-
-        cv::Mat frameRGBA(input->width(), input->height(), CV_8UC4, input->bits(), input->bytesPerLine());
-        cv::Mat frame(input->width(), input->height(), CV_8UC3);
-        cv::cvtColor(frameRGBA, frame, cv::COLOR_RGBA2BGR);
+        cv::Mat frameRGBA(input->height(), input->width(), CV_8UC4, input->bits());
+        cv::Mat frame = frameRGBA;
+        frameRGBA.convertTo(frame, CV_8UC3);
         input->unmap();
 
-        cv::flip(frame, frame, 1);
+        cv::flip(frame, frame, -1);
 
-        cv::cvtColor(frame, frame, cv::COLOR_BGR2RGBA);
-        QImage image(frame.data, frame.cols, frame.rows, (int)frame.step, QImage::Format_RGB32);
+//        cv::imshow("frame", frame);
+//        cv::imshow("frameRGBA", frameRGBA);
 
-//        QImage newImage(QSize(frame.rows, frame.cols), QImage::Format_RGB32);
-        return QVideoFrame(frame.step * frame.cols, QSize(frame.rows, frame.cols), frame.step, input->pixelFormat());
+//        cv::cvtColor(frame, frame, cv::COLOR_BGR2RGBA);
+        cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
+        frame.convertTo(frameRGBA, CV_8UC4);
+
+
+//        cv::imshow("frame", frame);
+//        cv::imshow("frameRGBA", frameRGBA);
+//        QImage image(frameRGBA.data, frameRGBA.cols, frameRGBA.rows, QImage::Format_RGB32);
+
+//        return QVideoFrame(image);
     }
 
     return *input;
