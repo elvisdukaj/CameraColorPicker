@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>MainForm.ui.qml</file>
+        <file>HueSlider.qml</file>
+        <file>SliderIndicator.qml</file>
     </qresource>
 </RCC>

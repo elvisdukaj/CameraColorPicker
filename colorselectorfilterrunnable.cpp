@@ -18,24 +18,34 @@ cv::Mat toHsv(const cv::Mat& input)
 	return result;
 }
 
+enum class HSVColorFilterRangeType
+{
+	INTERNAL,
+	EXTERNAL
+};
+
 struct HSVColorFilter
 {
-	HSVColorFilter( const cv::Vec3b lower, const cv::Vec3b upper, bool isInternal = true)
-		: lower(lower), upper(upper), isInternal(isInternal)
+	HSVColorFilter( const cv::Vec3b lower,
+					const cv::Vec3b upper,
+					HSVColorFilterRangeType rangeType = HSVColorFilterRangeType::INTERNAL)
+		: lower(lower), upper(upper), rangeType(rangeType)
 	{
 	}
 
 	cv::Vec3b lower = cv::Vec3b(0, 0, 0);
 	cv::Vec3b upper = cv::Vec3b(180, 255, 255);
-	bool isInternal = true;
+	HSVColorFilterRangeType rangeType = HSVColorFilterRangeType::EXTERNAL;
 };
 
-HSVColorFilter greenColorFilter(cv::Vec3b(30, 30, 30), cv::Vec3b(90, 255, 255));
+HSVColorFilter greenColorFilter(cv::Vec3b(30, 30, 30), cv::Vec3b(80, 255, 255));
+HSVColorFilter redColorFilter(cv::Vec3b(160, 50, 30), cv::Vec3b(30, 255, 255), HSVColorFilterRangeType::EXTERNAL);
+HSVColorFilter blueColorFilter(cv::Vec3b(80, 100, 30), cv::Vec3b(130, 255, 255));
 
 cv::Mat getMaskFromColorFilter(const cv::Mat& input, const HSVColorFilter& hsvFilter)
 {
 	cv::Mat result;
-	if (hsvFilter.isInternal)
+	if (hsvFilter.rangeType == HSVColorFilterRangeType::INTERNAL)
 	{
 		cv::inRange(input, hsvFilter.lower, hsvFilter.upper, result);
 	}
@@ -75,18 +85,17 @@ QVideoFrame ColorSelectorFilterRunnable::run(QVideoFrame *input, const QVideoSur
         cv::Mat frameRGBA(input->height(), input->width(), CV_8UC4, input->bits(), input->bytesPerLine());
 		cv::Mat frame;
 
-		cv::cvtColor(frameRGBA, frame, cv::COLOR_RGBA2BGR);
+		cv::cvtColor(frameRGBA, frame, cv::COLOR_BGRA2BGR);
 
 		const auto grayFrame = toGrayScale(frame);
-		const auto mask = getMaskFromColorFilter(toHsv(frame), greenColorFilter);
+		const auto mask = getMaskFromColorFilter(toHsv(frame), redColorFilter);
 
 		cv::Mat frameToDisplay;
 		cv::cvtColor(grayFrame, frameToDisplay, cv::COLOR_GRAY2BGR);
 		frame.copyTo(frameToDisplay, mask);
 
-		cv::flip(frame, frame, 1);
-
-		cv::cvtColor(frameToDisplay, frameRGBA, cv::COLOR_BGR2RGBA);
+//		cv::flip(frameToDisplay, frameToDisplay, 1);
+		cv::cvtColor(frameToDisplay, frameRGBA, cv::COLOR_BGR2BGRA);
 
 		input->unmap();
     }

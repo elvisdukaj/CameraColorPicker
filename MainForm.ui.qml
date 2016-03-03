@@ -38,4 +38,12 @@ Item {
             checked: false
         }
     }
+
+    HueSlider
+    {
+        anchors.right: parent.right
+        anchors.top: parent.top
+
+        width: 150
+    }
 }

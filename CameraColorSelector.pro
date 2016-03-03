@@ -7,6 +7,10 @@ SOURCES += main.cpp \
     colorselectorfilter.cpp \
     colorselectorfilterrunnable.cpp
 
+HEADERS += \
+    colorselectorfilter.h \
+    colorselectorfilterrunnable.h
+
 RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
@@ -17,10 +21,6 @@ include(deployment.pri)
 
 win32 {
     INCLUDEPATH += $(OPENCV310_ROOT)/include
-}
-
-win32-msvc2015 {
-
     LIBS += -L$(OPENCV310_ROOT)/x64/vc14/lib
 
     CONFIG(debug, debug|release) {
@@ -29,7 +29,3 @@ win32-msvc2015 {
         LIBS += -lopencv_world310
     }
 }
-
-HEADERS += \
-    colorselectorfilter.h \
-    colorselectorfilterrunnable.h
