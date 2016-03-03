@@ -88,7 +88,7 @@ QVideoFrame ColorSelectorFilterRunnable::run(QVideoFrame *input, const QVideoSur
 		cv::cvtColor(frameRGBA, frame, cv::COLOR_BGRA2BGR);
 
 		const auto grayFrame = toGrayScale(frame);
-		const auto mask = getMaskFromColorFilter(toHsv(frame), redColorFilter);
+        const auto mask = getMaskFromColorFilter(toHsv(frame), blueColorFilter);
 
 		cv::Mat frameToDisplay;
 		cv::cvtColor(grayFrame, frameToDisplay, cv::COLOR_GRAY2BGR);

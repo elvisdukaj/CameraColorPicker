@@ -4,5 +4,6 @@
         <file>MainForm.ui.qml</file>
         <file>HueSlider.qml</file>
         <file>SliderIndicator.qml</file>
+        <file>TriangleCanvas.qml</file>
     </qresource>
 </RCC>

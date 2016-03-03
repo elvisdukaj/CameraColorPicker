@@ -45,5 +45,6 @@ Item {
         anchors.top: parent.top
 
         width: 150
+        height: 50
     }
 }
