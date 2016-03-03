@@ -41,7 +41,7 @@ Rectangle {
             }
         }
 
-        SliderIndicator {
+        ColorRangePicker {
             width: 10
             height: 30
 
