@@ -40,7 +40,7 @@ struct HSVColorFilter
 
 HSVColorFilter greenColorFilter(cv::Vec3b(30, 30, 30), cv::Vec3b(80, 255, 255));
 HSVColorFilter redColorFilter(cv::Vec3b(160, 50, 30), cv::Vec3b(30, 255, 255), HSVColorFilterRangeType::EXTERNAL);
-HSVColorFilter blueColorFilter(cv::Vec3b(80, 100, 30), cv::Vec3b(130, 255, 255));
+HSVColorFilter blueColorFilter(cv::Vec3b(70, 50, 30), cv::Vec3b(150, 255, 255));
 
 cv::Mat getMaskFromColorFilter(const cv::Mat& input, const HSVColorFilter& hsvFilter)
 {

@@ -8,6 +8,7 @@ Window {
     height: 600
 
     MainForm {
+        anchors.fill: parent
     }
 
 

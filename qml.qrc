@@ -3,7 +3,9 @@
         <file>main.qml</file>
         <file>MainForm.ui.qml</file>
         <file>HueSlider.qml</file>
-        <file>TriangleCanvas.qml</file>
         <file>ColorRangePicker.qml</file>
+        <file>Thumb.qml</file>
+        <file>ThumbCanvas.qml</file>
+        <file>HSVGradient.qml</file>
     </qresource>
 </RCC>
