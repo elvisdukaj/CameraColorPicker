@@ -5,18 +5,19 @@ Canvas {
 
     antialiasing: true
 
-    property color color: "#FF0000"
-    property int lineWidth: 2
+    property color color
+    property int lineWidth: 1
 
+    onColorChanged: requestPaint();
     onLineWidthChanged: requestPaint();
 
     onPaint: {
         var ctx = getContext("2d");
 
         ctx.save();
-        ctx.clearRect(0,0,triangle.width, triangle.height);
-        ctx.lineWidth = triangle.lineWidth
-        ctx.fillStyle = triangle.color
+        ctx.clearRect(0, 0, parent.width, parent.height);
+        ctx.lineWidth = parent.lineWidth
+        ctx.fillStyle = parent.color
         ctx.lineJoin = "round";
 
         ctx.beginPath();

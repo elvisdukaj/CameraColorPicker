@@ -1,7 +1,7 @@
 import QtQuick 2.5
 
 Item {
-    property color color: "red";
+    property color color
 
     ThumbCanvas {
         anchors.fill: parent
