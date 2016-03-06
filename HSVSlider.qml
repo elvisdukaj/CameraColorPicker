@@ -19,6 +19,6 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        height: parent.height / 3 * 2
+        height: parent.height / 2
     }
 }

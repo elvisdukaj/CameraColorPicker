@@ -2,17 +2,17 @@ import QtQuick 2.5
 
 Item {
     id: rangeSlider
-    property int thumbWidth: 10
+    property int thumbWidth: height / 2 * 3
 
-    property real lowerValue: (lowerThumb.x + lowerThumb.width / 2) / width
-    property real upperValue: (upperThumb.x + upperThumb.width / 2) / width
+    property real lowerValue: (lowerThumb.x + (lowerThumb.width + 1)/ 2) / width
+    property real upperValue: (upperThumb.x + (upperThumb.width + 1) / 2) / width
 
     Thumb {
         id: lowerThumb
         anchors.bottom: parent.bottom
 
         width: thumbWidth
-        height: parent.height / 2
+        height: parent.height
 
         x: 0
 
@@ -33,7 +33,7 @@ Item {
         anchors.bottom: parent.bottom
 
         width: thumbWidth
-        height: parent.height / 2
+        height: parent.height
 
         x: parent.width - width
 

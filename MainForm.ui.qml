@@ -36,8 +36,8 @@ Item {
     }
 
     HSVSlider {
-        anchors.right: parent.right
-        anchors.top: parent.top
+        anchors.right: parent.right - 10
+        anchors.top: parent.top - 10
 
         width: 150
         height: 30
