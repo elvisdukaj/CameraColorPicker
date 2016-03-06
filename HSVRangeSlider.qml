@@ -1,10 +1,11 @@
 import QtQuick 2.5
 
 Item {
+    id: rangeSlider
     property int thumbWidth: 10
 
-    property real lowerValue: (lowerThumb.x - lowerThumb.width / 2) / width
-    property real upperValue: (upperThumb.x - upperThumb.width / 2) / width
+    property real lowerValue: (lowerThumb.x + lowerThumb.width / 2) / width
+    property real upperValue: (upperThumb.x + upperThumb.width / 2) / width
 
     Thumb {
         id: lowerThumb
@@ -19,10 +20,11 @@ Item {
 
         MouseArea {
             anchors.fill: parent
+
             drag.target: parent;
             drag.axis: Drag.XAxis
             drag.minimumX: 0;
-            drag.maximumX: upperThumb.x - upperThumb.width
+            drag.maximumX: upperThumb.x - width
         }
     }
 
@@ -39,10 +41,11 @@ Item {
 
         MouseArea {
             anchors.fill: parent
+
             drag.target: parent;
             drag.axis: Drag.XAxis
-            drag.minimumX: lowerThumb.x + lowerThumb.width;
-            drag.maximumX: slider.width - upperThumb.width
+            drag.minimumX: lowerThumb.x + lowerThumb.width
+            drag.maximumX: rangeSlider.width - width
         }
     }
 }

@@ -4,6 +4,7 @@ import QtGraphicalEffects 1.0
 Rectangle {
 
     color: "transparent"
+
     border.color: "black"
     border.width: 1
 

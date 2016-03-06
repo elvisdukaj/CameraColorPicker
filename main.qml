@@ -4,11 +4,8 @@ import QtQuick.Window 2.2
 Window {
     visible: true
 
-    width: 800;
-    height: 600
-
-//    onWidthChanged: console.log("width now is ", width)
-//    onHeightChanged: console.log("height now is ", height)
+    width: 1280
+    height: 720
 
     MainForm {
         anchors.fill: parent

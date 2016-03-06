@@ -4,14 +4,11 @@ import QtMultimedia 5.5
 import Elice.CameraColorSelector 1.0
 
 Item {
-    width: 800
-    height: 600
-
     Camera {
         id: camera
 
         viewfinder {
-            resolution: "800x600"
+            resolution: "1280x720"
             maximumFrameRate: 30
         }
     }
@@ -21,8 +18,7 @@ Item {
         active: activeFilter.checked
     }
 
-    VideoOutput
-    {
+    VideoOutput {
         source: camera
         anchors.centerIn: parent;
         filters: [colorFilter]
@@ -39,8 +35,7 @@ Item {
         }
     }
 
-    HueSlider
-    {
+    HSVSlider {
         anchors.right: parent.right
         anchors.top: parent.top
 

@@ -2,11 +2,10 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>MainForm.ui.qml</file>
-        <file>ColorRangePicker.qml</file>
         <file>Thumb.qml</file>
         <file>ThumbCanvas.qml</file>
         <file>HSVGradient.qml</file>
-        <file>RangeSlider.qml</file>
         <file>HSVRangeSlider.qml</file>
+        <file>HSVSlider.qml</file>
     </qresource>
 </RCC>
