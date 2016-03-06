@@ -11,5 +11,17 @@ Window {
         anchors.fill: parent
     }
 
+    HSVSlider {
+        objectName: sliderObjName
+
+        anchors.right: parent.right
+        anchors.top: parent.top
+
+        width: 150
+        height: 30
+        anchors.rightMargin: 7
+        anchors.topMargin: 7
+    }
+
 
 }

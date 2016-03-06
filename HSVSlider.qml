@@ -6,7 +6,11 @@ Rectangle {
 
     color: "transparent"
 
+    property alias lowerValue: range.lowerValue
+    property alias upperValue: range.upperValue
+
     HSVGradient {
+        id: gradient
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
@@ -15,6 +19,7 @@ Rectangle {
     }
 
     HSVRangeSlider {
+        id: range
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom

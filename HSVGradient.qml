@@ -1,13 +1,7 @@
 import QtQuick 2.5
 import QtGraphicalEffects 1.0
 
-Rectangle {
-
-    color: "transparent"
-
-    border.color: "black"
-    border.width: 1
-
+Item {
     LinearGradient {
         anchors.fill: parent
         anchors.margins: 1
@@ -26,5 +20,11 @@ Rectangle {
             GradientStop {position: 5/6; color: Qt.rgba(1, 0, 1, 1)}
             GradientStop {position: 6/6; color: Qt.rgba(1, 0, 0, 1)}
         }
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border.color: "black"
     }
 }

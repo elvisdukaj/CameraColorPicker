@@ -5,6 +5,16 @@
 
 class ColorSelectorFilter;
 
+struct NormalizedHSV
+{
+    float h, s, v;
+};
+
+struct NormalizedHSVRange {
+    NormalizedHSV lower;
+    NormalizedHSV upper;
+};
+
 class ColorSelectorFilterRunnable : public QVideoFilterRunnable
 {
 public:
@@ -12,8 +22,11 @@ public:
 
     QVideoFrame run(QVideoFrame *input, const QVideoSurfaceFormat &surfaceFormat, RunFlags flags) override;
 
+    void setRangeRange(const NormalizedHSVRange& range);
+
 private:
     ColorSelectorFilter* m_Filter;
+    NormalizedHSVRange rangeFilter;
 };
 
 
