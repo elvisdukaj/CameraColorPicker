@@ -23,12 +23,13 @@ Rectangle {
         id: selectedZoneLeft
 
         y: 0
-        x: 0
+        x: range.thumbWidth / 2
 
         height: gradient.height
-        width: range.lowerThumbX + (range.thumbWidth / 2)
+        width: range.lowerThumbX
 
         color: "#aaaaaaaa"
+        border.color: "white"
     }
 
     Rectangle {
@@ -38,9 +39,10 @@ Rectangle {
         x: range.upperThumbX + (range.thumbWidth / 2)
 
         height: gradient.height
-        width: gradient.width
+        width: gradient.width - x + range.thumbWidth / 2
 
         color: "#aaaaaaaa"
+        border.color: "white"
     }
 
     HSVRangeSlider {

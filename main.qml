@@ -12,8 +12,6 @@ Window {
     }
 
     HSVSlider {
-        objectName: sliderObjName
-
         anchors.right: parent.right
         anchors.top: parent.top
 
@@ -22,6 +20,4 @@ Window {
         anchors.rightMargin: 7
         anchors.topMargin: 7
     }
-
-
 }
