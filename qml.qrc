@@ -6,5 +6,6 @@
         <file>HSVGradient.qml</file>
         <file>HSVRangeSlider.qml</file>
         <file>HSVSlider.qml</file>
+        <file>HSVSelectedRegion.qml</file>
     </qresource>
 </RCC>
