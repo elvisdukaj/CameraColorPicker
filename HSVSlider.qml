@@ -11,11 +11,12 @@ Rectangle {
 
     HSVGradient {
         id: gradient
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
+
+        y: 0
+        anchors.horizontalCenter: parent.horizontalCenter
 
         height: parent.height / 3 * 2
+        width: range.width - range.thumbWidth
     }
 
     HSVRangeSlider {
