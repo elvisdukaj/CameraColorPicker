@@ -9,6 +9,7 @@ Item {
 
     Thumb {
         id: lowerThumb
+
         anchors.bottom: parent.bottom
 
         width: thumbWidth
@@ -25,12 +26,12 @@ Item {
             drag.axis: Drag.XAxis
             drag.minimumX: 0;
             drag.maximumX: upperThumb.x - width
-
         }
     }
 
     Thumb {
         id: upperThumb
+
         anchors.bottom: parent.bottom
 
         width: thumbWidth

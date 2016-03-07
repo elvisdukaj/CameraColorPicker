@@ -4,7 +4,6 @@ import QtGraphicalEffects 1.0
 Item {
     LinearGradient {
         anchors.fill: parent
-        anchors.margins: 1
 
         y: parent.height / 2
 
