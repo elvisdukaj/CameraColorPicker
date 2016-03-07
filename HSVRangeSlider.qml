@@ -7,6 +7,9 @@ Item {
     property real lowerValue: lowerThumb.x  / (width - lowerThumb.width)
     property real upperValue: upperThumb.x / (width - upperThumb.width)
 
+    property int lowerThumbX: lowerThumb.x
+    property int upperThumbX: upperThumb.x
+
     Thumb {
         id: lowerThumb
 

@@ -19,6 +19,30 @@ Rectangle {
         width: range.width - range.thumbWidth
     }
 
+    Rectangle {
+        id: selectedZoneLeft
+
+        y: 0
+        x: 0
+
+        height: gradient.height
+        width: range.lowerThumbX + (range.thumbWidth / 2)
+
+        color: "#aaaaaaaa"
+    }
+
+    Rectangle {
+        id: selectedZoneRight
+
+        y: 0
+        x: range.upperThumbX + (range.thumbWidth / 2)
+
+        height: gradient.height
+        width: gradient.width
+
+        color: "#aaaaaaaa"
+    }
+
     HSVRangeSlider {
         id: range
 
