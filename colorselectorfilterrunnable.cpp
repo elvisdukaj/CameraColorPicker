@@ -43,7 +43,7 @@ struct HSVColorFilter
     }
 
     cv::Vec3b lower = cv::Vec3b(0, 0, 0);
-    cv::Vec3b upper = cv::Vec3b(180, 255, 255);
+	cv::Vec3b upper = cv::Vec3b(180, 255, 255);
 	HSVRangeType rangeType = EXTERNAL;
 
 private:
@@ -86,7 +86,7 @@ cv::Mat getMaskFromColorFilter(const cv::Mat& input, const HSVColorFilter& hsvFi
 class ColorSelectorFilterRunnableImpl {
 public:
 	ColorSelectorFilterRunnableImpl(ColorSelectorFilter *filter)
-		: mFilter(filter) , mColorFilter(cv::Vec3b(0, 0, 0), cv::Vec3b(180, 0, 0), HSVRangeType::INTERNAL)
+		: mFilter(filter) , mColorFilter(cv::Vec3b(0, 0, 0), cv::Vec3b(180, 255, 255), HSVRangeType::INTERNAL)
 	{
 	}
 
