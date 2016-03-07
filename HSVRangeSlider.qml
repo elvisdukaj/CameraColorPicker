@@ -4,8 +4,8 @@ Item {
     id: rangeSlider
     property int thumbWidth: height
 
-    property real lowerValue: (lowerThumb.x + (lowerThumb.width + 1)/ 2) / width
-    property real upperValue: (upperThumb.x + (upperThumb.width + 1) / 2) / width
+    property real lowerValue: lowerThumb.x  / (width - lowerThumb.width)
+    property real upperValue: upperThumb.x / (width - upperThumb.width)
 
     Thumb {
         id: lowerThumb
@@ -25,6 +25,7 @@ Item {
             drag.axis: Drag.XAxis
             drag.minimumX: 0;
             drag.maximumX: upperThumb.x - width
+
         }
     }
 

@@ -21,10 +21,25 @@ Rectangle {
 
     HSVRangeSlider {
         id: range
+
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
         height: parent.height / 2
+    }
+
+    Text {
+        id: lowerValue
+        anchors.left: parent.left
+        anchors.top: parent.top
+        text: range.lowerValue.toFixed(2)
+    }
+
+    Text {
+        id: upperValue
+        anchors.right: parent.right
+        anchors.top: parent.top
+        text: range.upperValue.toFixed(2)
     }
 }
