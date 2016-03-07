@@ -3,35 +3,25 @@
 #include <opencv2/opencv.hpp>
 #include <QDebug>
 
-
-cv::Mat toGrayScale(const cv::Mat& input)
+cv::Mat bgrToGrayScale(const cv::Mat& input)
 {
 	cv::Mat result;
 	cv::cvtColor(input, result, cv::COLOR_BGR2GRAY);
 	return result;
 }
 
-cv::Mat toHsv(const cv::Mat& input)
+cv::Mat bgrToHsv(const cv::Mat& input)
 {
 	cv::Mat result;
 	cv::cvtColor(input, result, cv::COLOR_BGR2HSV);
 	return result;
 }
 
-
-
-enum RangeType
-{
-    INTERNAL,
-    EXTERNAL
-};
-
-
 struct HSVColorFilter
 {
 	HSVColorFilter( const cv::Vec3b lower,
 					const cv::Vec3b upper,
-                    RangeType rangeType = RangeType::INTERNAL)
+					HSVRangeType rangeType = HSVRangeType::INTERNAL)
 		: lower(lower), upper(upper), rangeType(rangeType)
 	{
     }
@@ -54,7 +44,7 @@ struct HSVColorFilter
 
     cv::Vec3b lower = cv::Vec3b(0, 0, 0);
     cv::Vec3b upper = cv::Vec3b(180, 255, 255);
-    RangeType rangeType = EXTERNAL;
+	HSVRangeType rangeType = EXTERNAL;
 
 private:
     static const float HUE_FACTOR;
@@ -70,12 +60,10 @@ const float HSVColorFilter::VALUE_FACTOR = 255.0f;
 //HSVColorFilter redColorFilter(cv::Vec3b(160, 50, 30), cv::Vec3b(30, 255, 255), RangeType::EXTERNAL);
 //HSVColorFilter blueColorFilter(cv::Vec3b(70, 50, 30), cv::Vec3b(150, 255, 255));
 
-HSVColorFilter g_colorFilter(cv::Vec3b(30, 30, 30), cv::Vec3b(80, 255, 255));
-
 cv::Mat getMaskFromColorFilter(const cv::Mat& input, const HSVColorFilter& hsvFilter)
 {
 	cv::Mat result;
-    if (hsvFilter.rangeType == RangeType::INTERNAL)
+	if (hsvFilter.rangeType == HSVRangeType::INTERNAL)
 	{
 		cv::inRange(input, hsvFilter.lower, hsvFilter.upper, result);
 	}
@@ -95,46 +83,75 @@ cv::Mat getMaskFromColorFilter(const cv::Mat& input, const HSVColorFilter& hsvFi
 	return result;
 }
 
-ColorSelectorFilterRunnable::
-ColorSelectorFilterRunnable(ColorSelectorFilter *filter)
-    : m_Filter( filter )
+class ColorSelectorFilterRunnableImpl {
+public:
+	ColorSelectorFilterRunnableImpl(ColorSelectorFilter *filter)
+		: mFilter(filter) , mColorFilter(cv::Vec3b(0, 0, 0), cv::Vec3b(180, 0, 0), HSVRangeType::INTERNAL)
+	{
+	}
+
+	~ColorSelectorFilterRunnableImpl()
+	{
+		delete mFilter;
+	}
+
+	QVideoFrame run(QVideoFrame *input, const QVideoSurfaceFormat&, QVideoFilterRunnable::RunFlags)
+	{
+		if (input->isValid())
+		{
+			if ((input->handleType() != QAbstractVideoBuffer::HandleType::NoHandle) ||
+				(input->pixelFormat() != QVideoFrame::PixelFormat::Format_RGB32 ))
+				return *input;
+
+			if (!input->map(QAbstractVideoBuffer::ReadWrite))
+				return *input;
+
+			cv::Mat frameRGBA(input->height(), input->width(), CV_8UC4, input->bits(), input->bytesPerLine());
+			cv::Mat frame;
+
+			cv::cvtColor(frameRGBA, frame, cv::COLOR_BGRA2BGR);
+
+			const auto grayFrame = bgrToGrayScale(frame);
+
+			const auto mask = getMaskFromColorFilter(bgrToHsv(frame), mColorFilter);
+
+			cv::Mat frameToDisplay;
+			cv::cvtColor(grayFrame, frameToDisplay, cv::COLOR_GRAY2BGR);
+			frame.copyTo(frameToDisplay, mask);
+
+			cv::cvtColor(frameToDisplay, frameRGBA, cv::COLOR_BGR2BGRA);
+
+			input->unmap();
+		}
+
+		return *input;
+	}
+
+	void setRangeRange(const NormalizedHSVRange& range)
+	{
+		mColorFilter.lower  = HSVColorFilter::toOpenCV(range.lower);
+		mColorFilter.upper = HSVColorFilter::toOpenCV(range.upper);
+		mColorFilter.rangeType = range.rangeType;
+	}
+
+private:
+	ColorSelectorFilter* mFilter;
+	HSVColorFilter mColorFilter;
+};
+
+
+ColorSelectorFilterRunnable::ColorSelectorFilterRunnable(ColorSelectorFilter *filter)
+	: mImpl(new ColorSelectorFilterRunnableImpl(filter))
 {
 }
 
-QVideoFrame ColorSelectorFilterRunnable::run(QVideoFrame *input, const QVideoSurfaceFormat&, QVideoFilterRunnable::RunFlags)
+QVideoFrame ColorSelectorFilterRunnable::run(
+		QVideoFrame *input, const QVideoSurfaceFormat& surfaceFormat, QVideoFilterRunnable::RunFlags flags)
 {
-    if (input->isValid())
-    {
-		if ((input->handleType() != QAbstractVideoBuffer::HandleType::NoHandle) ||
-			(input->pixelFormat() != QVideoFrame::PixelFormat::Format_RGB32 ))
-            return *input;
-
-		if (!input->map(QAbstractVideoBuffer::ReadWrite))
-            return *input;
-
-        cv::Mat frameRGBA(input->height(), input->width(), CV_8UC4, input->bits(), input->bytesPerLine());
-		cv::Mat frame;
-
-		cv::cvtColor(frameRGBA, frame, cv::COLOR_BGRA2BGR);
-
-		const auto grayFrame = toGrayScale(frame);
-
-        const auto mask = getMaskFromColorFilter(toHsv(frame), g_colorFilter);
-
-		cv::Mat frameToDisplay;
-		cv::cvtColor(grayFrame, frameToDisplay, cv::COLOR_GRAY2BGR);
-		frame.copyTo(frameToDisplay, mask);
-
-		cv::cvtColor(frameToDisplay, frameRGBA, cv::COLOR_BGR2BGRA);
-
-		input->unmap();
-    }
-
-    return *input;
+	return mImpl->run(input, surfaceFormat, flags);
 }
 
 void ColorSelectorFilterRunnable::setRangeRange(const NormalizedHSVRange& range)
 {
-    g_colorFilter.lower = HSVColorFilter::toOpenCV(range.lower);
-    g_colorFilter.upper = HSVColorFilter::toOpenCV(range.upper);
+	return mImpl->setRangeRange(range);
 }
