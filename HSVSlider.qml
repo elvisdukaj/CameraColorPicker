@@ -9,6 +9,7 @@ Rectangle {
 
     property alias lowerValue: range.lowerValue
     property alias upperValue: range.upperValue
+    property color gradientBorderColor: "lightgray"
     property bool isInternal: true
 
     HSVGradient {
@@ -39,7 +40,7 @@ Rectangle {
         width: range.lowerThumbX
 
         color: "#aaaaaaaa"
-        border.color: "white"
+        border.color: slider.gradientBorderColor
     }
 
     Rectangle {
@@ -54,7 +55,7 @@ Rectangle {
         width: range.upperThumbX - x + range.thumbWidth / 2
 
         color: "#aaaaaaaa"
-        border.color: "white"
+        border.color: slider.gradientBorderColor
     }
 
     Rectangle {
@@ -68,7 +69,7 @@ Rectangle {
         width: gradient.width - x + range.thumbWidth / 2
 
         color: "#aaaaaaaa"
-        border.color: "white"
+        border.color: slider.gradientBorderColor
     }
 
     HSVRangeSlider {
