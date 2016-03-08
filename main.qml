@@ -12,7 +12,7 @@ Window {
         id: mainForm
         anchors.fill: parent
 
-        onColorFilterActiveChanged: model.colorFilter = colorFilter
+        onColorFilterActiveChanged: model.colorFilter = filter
     }
 
     HSVSlider {
@@ -27,13 +27,11 @@ Window {
         anchors.topMargin: 7
 
         onLowerValueChanged: model.onLowerValueChanged(slider.lowerValue);
-        onUpperValueChanged: model.onLowerValueChanged(slider.upperValue);
-//        onIsInternalChanged: model.onLowerValueChanged();
+        onUpperValueChanged: model.onUpperValueChanged(slider.upperValue);
+        onIsInternalChanged: model.onRangeTypeChanged(slider.isInternal)
 
         HSVSliderModel {
             id: model
-
-
         }
     }
 

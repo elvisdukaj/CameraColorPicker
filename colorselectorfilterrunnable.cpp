@@ -28,17 +28,17 @@ struct HSVColorFilter
 
     static cv::Vec3b toOpenCV(const NormalizedHSV& hsv)
     {
-        return cv::Vec3b(hsv.h / HUE_FACTOR,
-                         hsv.s / SATURATION_FACTOR,
-                         hsv.v / VALUE_FACTOR);
+        return cv::Vec3b(hsv.h * HUE_FACTOR,
+                         hsv.s * SATURATION_FACTOR,
+                         hsv.v * VALUE_FACTOR);
     }
 
     static NormalizedHSV fromOpenCV(const cv::Vec3b& hsv)
     {
         return {
-                hsv[0] * HUE_FACTOR,
-                hsv[1] * SATURATION_FACTOR,
-                hsv[2] * VALUE_FACTOR
+                hsv[0] / HUE_FACTOR,
+                hsv[1] / SATURATION_FACTOR,
+                hsv[2] / VALUE_FACTOR
         };
     }
 
