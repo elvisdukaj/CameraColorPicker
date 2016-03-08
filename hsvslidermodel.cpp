@@ -24,14 +24,12 @@ void HSVSliderModel::setColorFilter(QObject *filter)
 
 void HSVSliderModel::onLowerValueChanged(float lowerVal)
 {
-//    mColorFilterRange.lower = NormalizedHSV{lowerVal * 360.0f, 0.0f, 0.0f};
     mColorFilterRange.lower = NormalizedHSV{lowerVal, 0.0f, 0.0f};
 	updateFilter();
 }
 
 void HSVSliderModel::onUpperValueChanged(float upperVal)
 {
-//    mColorFilterRange.upper = NormalizedHSV{upperVal * 360.0f, 100.0f, 100.0f};
     mColorFilterRange.upper = NormalizedHSV{upperVal, 1.0f, 1.0f};
 	updateFilter();
 }
