@@ -4,6 +4,9 @@ import QtMultimedia 5.5
 import Elice.CameraColorSelector 1.0
 
 Item {
+    property alias colorFilter: colorFilter
+    property alias colorFilterActive: colorFilter.active
+
     Camera {
         id: camera
 
@@ -13,12 +16,14 @@ Item {
         }
     }
 
-    ColorFilter {
+    ColorSelectorFilter {
         id: colorFilter
         active: activeFilter.checked
     }
 
     VideoOutput {
+        id: videoOutput
+
         source: camera
         anchors.centerIn: parent;
         filters: [colorFilter]

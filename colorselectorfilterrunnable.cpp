@@ -56,10 +56,6 @@ const float HSVColorFilter::HUE_FACTOR = 180.0f;
 const float HSVColorFilter::SATURATION_FACTOR = 255.0f;
 const float HSVColorFilter::VALUE_FACTOR = 255.0f;
 
-//HSVColorFilter greenColorFilter(cv::Vec3b(30, 30, 30), cv::Vec3b(80, 255, 255));
-//HSVColorFilter redColorFilter(cv::Vec3b(160, 50, 30), cv::Vec3b(30, 255, 255), RangeType::EXTERNAL);
-//HSVColorFilter blueColorFilter(cv::Vec3b(70, 50, 30), cv::Vec3b(150, 255, 255));
-
 cv::Mat getMaskFromColorFilter(const cv::Mat& input, const HSVColorFilter& hsvFilter)
 {
 	cv::Mat result;
@@ -139,10 +135,14 @@ private:
 	HSVColorFilter mColorFilter;
 };
 
-
-ColorSelectorFilterRunnable::ColorSelectorFilterRunnable(ColorSelectorFilter *filter)
+ColorSelectorFilterRunnable::ColorSelectorFilterRunnable(ColorSelectorFilter* filter)
 	: mImpl(new ColorSelectorFilterRunnableImpl(filter))
 {
+}
+
+ColorSelectorFilterRunnable::~ColorSelectorFilterRunnable()
+{
+	qDebug() << this << ": dctor";
 }
 
 QVideoFrame ColorSelectorFilterRunnable::run(
@@ -151,7 +151,7 @@ QVideoFrame ColorSelectorFilterRunnable::run(
 	return mImpl->run(input, surfaceFormat, flags);
 }
 
-void ColorSelectorFilterRunnable::setRangeRange(const NormalizedHSVRange& range)
+void ColorSelectorFilterRunnable::setColorRange(const NormalizedHSVRange& range)
 {
 	return mImpl->setRangeRange(range);
 }

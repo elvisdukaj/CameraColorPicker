@@ -2,37 +2,21 @@
 #define COLORSELECTORFILTERRUNNABLE_H
 
 #include <QAbstractVideoFilter>
+#include <QObject>
 #include <memory>
+#include "hsvtype.h"
 
 class ColorSelectorFilter;
 class ColorSelectorFilterRunnableImpl;
 
-enum HSVRangeType
-{
-	INTERNAL,
-	EXTERNAL
-};
-
-struct NormalizedHSV
-{
-    float h, s, v;
-};
-
-struct NormalizedHSVRange {
-	enum RangeType { INTERNAL, EXTERNAL };
-
-    NormalizedHSV lower;
-    NormalizedHSV upper;
-	HSVRangeType rangeType;
-};
-
 class ColorSelectorFilterRunnable : public QVideoFilterRunnable
 {
 public:
-    ColorSelectorFilterRunnable(ColorSelectorFilter* filter);
+	ColorSelectorFilterRunnable(ColorSelectorFilter* filter);
+	~ColorSelectorFilterRunnable();
 
     QVideoFrame run(QVideoFrame *input, const QVideoSurfaceFormat &surfaceFormat, RunFlags flags) override;
-    void setRangeRange(const NormalizedHSVRange& range);
+	void setColorRange(const NormalizedHSVRange& range);
 
 private:
 	std::unique_ptr<ColorSelectorFilterRunnableImpl> mImpl;

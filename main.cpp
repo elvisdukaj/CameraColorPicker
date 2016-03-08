@@ -1,4 +1,5 @@
 #include "colorselectorfilter.h"
+#include "hsvslidermodel.h"
 
 #define USE_QML_APPLICATION_ENGINE
 
@@ -15,7 +16,8 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<ColorSelectorFilter>("Elice.CameraColorSelector", 1, 0, "ColorFilter");
+	qmlRegisterType<ColorSelectorFilter>("Elice.CameraColorSelector", 1, 0, "ColorSelectorFilter");
+	qmlRegisterType<HSVSliderModel>     ("Elice.CameraColorSelector", 1, 0, "HSVSliderModel");
 
 #ifdef USE_QML_APPLICATION_ENGINE
 	QQmlApplicationEngine engine;

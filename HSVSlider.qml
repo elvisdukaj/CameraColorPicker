@@ -30,7 +30,9 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: selectedGradientRegion.isInternal = !selectedGradientRegion.isInternal
+            onClicked: {
+                selectedGradientRegion.isInternal = !selectedGradientRegion.isInternal
+            }
         }
     }
 

@@ -1,10 +1,13 @@
 import QtQuick 2.0
+import Elice.CameraColorSelector 1.0
 
 Item {
     property bool isInternal: true
+
+//    property int rangeType: HSVSliderModel.HSVRangeType
+
     property color borderColor: "lightgray"
 
-//    property int thumbWidth
     property int lowerThumbX
     property int upperThumbX
 
@@ -28,10 +31,10 @@ Item {
         visible: parent.isInternal
 
         y: 0
-        x: upperThumbX //+ (range.thumbWidth / 2)
+        x: upperThumbX
 
         height: parent.height
-        width: parent.width - x //+ range.thumbWidth / 2
+        width: parent.width - x
 
         color: "#aaaaaaaa"
         border.color: parent.borderColor
