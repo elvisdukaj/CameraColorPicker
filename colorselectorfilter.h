@@ -2,20 +2,23 @@
 #define COLORSELECTORFILTER_H
 
 #include <QAbstractVideoFilter>
+#include <memory>
 
 class ColorSelectorFilterRunnable;
 
-class ColorSelectorFilter : public QAbstractVideoFilter
-{
-public:
-    QVideoFilterRunnable* createFilterRunnable() override;
-	~ColorSelectorFilter();
+class ColorSelectorFilter : public QAbstractVideoFilter {
+    Q_OBJECT
 
-	ColorSelectorFilterRunnable* runnbleFilter() const { return mRunnubleFiter; }
+public:
+    ColorSelectorFilter(QObject* parent = nullptr);
+    ~ColorSelectorFilter();
+
+    virtual QVideoFilterRunnable* createFilterRunnable() override;
+    ColorSelectorFilterRunnable* runnbleFilter() const;
 
 private:
     friend class ColorSelectorFilterRunnable;
-	ColorSelectorFilterRunnable* mRunnubleFiter;
+    ColorSelectorFilterRunnable* mRunnubleFiter = nullptr;
 };
 
 #endif // COLORSELECTORFILTER_H

@@ -14,6 +14,7 @@ class HSVSliderModel : public QObject
 
 public:
 	explicit HSVSliderModel(ColorSelectorFilter* filter = nullptr);
+    ~HSVSliderModel();
 
 	QObject* colorFilter() const;
 	void setColorFilter(QObject* filter);

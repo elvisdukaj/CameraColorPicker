@@ -81,14 +81,15 @@ cv::Mat getMaskFromColorFilter(const cv::Mat& input, const HSVColorFilter& hsvFi
 
 class ColorSelectorFilterRunnableImpl {
 public:
-	ColorSelectorFilterRunnableImpl(ColorSelectorFilter *filter)
-		: mFilter(filter) , mColorFilter(cv::Vec3b(0, 0, 0), cv::Vec3b(180, 255, 255), HSVRangeType::INTERNAL)
+    ColorSelectorFilterRunnableImpl()
+        : mColorFilter(cv::Vec3b(0, 0, 0), cv::Vec3b(180, 255, 255), HSVRangeType::INTERNAL)
 	{
+        qDebug() << this << "ctor";
 	}
 
 	~ColorSelectorFilterRunnableImpl()
-	{
-		delete mFilter;
+    {
+        qDebug() << this << ": dtor";
 	}
 
 	QVideoFrame run(QVideoFrame *input, const QVideoSurfaceFormat&, QVideoFilterRunnable::RunFlags)
@@ -131,18 +132,18 @@ public:
 	}
 
 private:
-	ColorSelectorFilter* mFilter;
 	HSVColorFilter mColorFilter;
 };
 
-ColorSelectorFilterRunnable::ColorSelectorFilterRunnable(ColorSelectorFilter* filter)
-	: mImpl(new ColorSelectorFilterRunnableImpl(filter))
+ColorSelectorFilterRunnable::ColorSelectorFilterRunnable()
+    : mImpl (new ColorSelectorFilterRunnableImpl())
 {
+    qDebug() << this << ": ctor";
 }
 
 ColorSelectorFilterRunnable::~ColorSelectorFilterRunnable()
 {
-	qDebug() << this << ": dctor";
+    qDebug() << this << ": dctor";
 }
 
 QVideoFrame ColorSelectorFilterRunnable::run(

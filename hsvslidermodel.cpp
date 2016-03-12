@@ -7,18 +7,21 @@
 HSVSliderModel::HSVSliderModel(ColorSelectorFilter *filter)
 	: mFilter(filter)
 {
-    qDebug() << this << " - ctor";
+    qDebug() << this << ": ctor";
+}
+
+HSVSliderModel::~HSVSliderModel()
+{
+    qDebug() << this << ": dtor";
 }
 
 QObject *HSVSliderModel::colorFilter() const
 {
-	qDebug() << this << ": colorFilter -> mFilter " << mFilter;
-	return mFilter;
+    return mFilter;
 }
 
 void HSVSliderModel::setColorFilter(QObject *filter)
 {
-	qDebug() << this << ": setColorFilter <- mFilter:" << filter;
 	mFilter = filter;
 }
 
@@ -44,7 +47,8 @@ void HSVSliderModel::updateFilter()
 {
 	if(mFilter)
     {
-		((ColorSelectorFilter*)mFilter)->runnbleFilter()->setColorRange(mColorFilterRange);        
-        qDebug() << this << ": mRunnableFilter is " << mFilter;
+        auto runnubleFilter = ((ColorSelectorFilter*)mFilter)->runnbleFilter();
+        if (runnubleFilter)
+            runnubleFilter->setColorRange(mColorFilterRange);
     }
 }

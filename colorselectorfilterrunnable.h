@@ -12,14 +12,14 @@ class ColorSelectorFilterRunnableImpl;
 class ColorSelectorFilterRunnable : public QVideoFilterRunnable
 {
 public:
-	ColorSelectorFilterRunnable(ColorSelectorFilter* filter);
+    ColorSelectorFilterRunnable();
 	~ColorSelectorFilterRunnable();
 
     QVideoFrame run(QVideoFrame *input, const QVideoSurfaceFormat &surfaceFormat, RunFlags flags) override;
 	void setColorRange(const NormalizedHSVRange& range);
 
 private:
-	std::unique_ptr<ColorSelectorFilterRunnableImpl> mImpl;
+    std::unique_ptr<ColorSelectorFilterRunnableImpl> mImpl;
 };
 
 
