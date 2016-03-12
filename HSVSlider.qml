@@ -35,7 +35,8 @@ Item {
             anchors.fill: parent
             onClicked: {
                 selectedGradientRegion.isInternal = !selectedGradientRegion.isInternal;
-                selectedGradientRegion.rangeType = selectedGradientRegion.isInternal ? HSVSliderModel.Internal : HSVSliderModel.External;
+                selectedGradientRegion.rangeType =
+                        selectedGradientRegion.isInternal ? ColorSelectorFilter.Internal : ColorSelectorFilter.External;
             }
         }
     }

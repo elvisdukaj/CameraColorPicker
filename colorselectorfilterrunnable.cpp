@@ -1,7 +1,5 @@
 #include "colorselectorfilterrunnable.h"
-#include "colorselectorfilter.h"
 #include <opencv2/opencv.hpp>
-#include <QDebug>
 
 cv::Mat bgrToGrayScale(const cv::Mat& input)
 {
@@ -85,14 +83,12 @@ class ColorSelectorFilterRunnableImpl {
 public:
     ColorSelectorFilterRunnableImpl()
         : mColorFilter(cv::Vec3b(0, 0, 0), cv::Vec3b(180, 255, 255), NormalizedHSVRange::Internal)
-	{
-        qDebug() << "ColorSelectorFilterRunnableImpl: ctor";
-	}
-
-	~ColorSelectorFilterRunnableImpl()
     {
-        qDebug() << "ColorSelectorFilterRunnableImpl: dtor";
-	}
+    }
+
+    ~ColorSelectorFilterRunnableImpl()
+    {
+    }
 
 	QVideoFrame run(QVideoFrame *input, const QVideoSurfaceFormat&, QVideoFilterRunnable::RunFlags)
 	{
@@ -140,12 +136,10 @@ private:
 ColorSelectorFilterRunnable::ColorSelectorFilterRunnable()
     : mImpl (std::make_unique<ColorSelectorFilterRunnableImpl>())
 {
-    qDebug() << "ColorSelectorFilterRunnable: ctor";
 }
 
 ColorSelectorFilterRunnable::~ColorSelectorFilterRunnable()
 {
-    qDebug() << "ColorSelectorFilterRunnable: dtor";
 }
 
 QVideoFrame ColorSelectorFilterRunnable::run(

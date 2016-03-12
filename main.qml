@@ -9,14 +9,8 @@ Window {
     height: 720
 
     MainForm {
-        id: mainForm
+        id: form
         anchors.fill: parent
-
-        onColorFilterActiveChanged: {
-            model.colorFilter = filter;
-            model.onActived(mainForm.colorFilterActive);
-            slider.visible = mainForm.colorFilterActive;
-        }
     }
 
     HSVSlider {
@@ -25,19 +19,15 @@ Window {
         anchors.right: parent.right
         anchors.top: parent.top
 
+        visible: form.colorFilterEnabled
+
         width: 300
         height: 50
         anchors.rightMargin: 7
         anchors.topMargin: 7
 
-        onLowerValueChanged: model.onLowerValueChanged(slider.lowerValue);
-        onUpperValueChanged: model.onUpperValueChanged(slider.upperValue);
-        onRangeTypeChanged: model.onRangeTypeChanged(slider.rangeType)
-
-        HSVSliderModel {
-            id: model
-        }
+        onLowerValueChanged: form.filter.onLowerValueChanged(slider.lowerValue)
+        onUpperValueChanged: form.filter.onUpperValueChanged(slider.upperValue)
+        onRangeTypeChanged: form.filter.onRangeTypeChanged(slider.rangeType)
     }
-
-
 }

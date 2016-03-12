@@ -5,13 +5,11 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     colorselectorfilter.cpp \
-    colorselectorfilterrunnable.cpp \
-    hsvslidermodel.cpp
+    colorselectorfilterrunnable.cpp
 
 HEADERS += \
     colorselectorfilter.h \
     colorselectorfilterrunnable.h \
-    hsvslidermodel.h \
     hsvtype.h
 
 RESOURCES += qml.qrc

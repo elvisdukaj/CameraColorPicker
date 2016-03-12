@@ -5,7 +5,7 @@ import Elice.CameraColorSelector 1.0
 
 Item {
     property alias filter: colorFilter
-    property alias colorFilterActive: colorFilter.active
+    property alias colorFilterEnabled: colorFilter.active
 
     Camera {
         id: camera
