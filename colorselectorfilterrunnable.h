@@ -2,12 +2,8 @@
 #define COLORSELECTORFILTERRUNNABLE_H
 
 #include <QAbstractVideoFilter>
-#include <QObject>
 #include <memory>
 #include "hsvtype.h"
-
-class ColorSelectorFilter;
-class ColorSelectorFilterRunnableImpl;
 
 class ColorSelectorFilterRunnable : public QVideoFilterRunnable
 {
@@ -19,6 +15,7 @@ public:
 	void setColorRange(const NormalizedHSVRange& range);
 
 private:
+    friend class ColorSelectorFilterRunnableImpl;
     std::unique_ptr<ColorSelectorFilterRunnableImpl> mImpl;
 };
 

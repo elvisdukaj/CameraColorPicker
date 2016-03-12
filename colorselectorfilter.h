@@ -18,7 +18,7 @@ public:
 
 private:
     friend class ColorSelectorFilterRunnable;
-    ColorSelectorFilterRunnable* mRunnubleFiter = nullptr;
+    std::unique_ptr<ColorSelectorFilterRunnable> mRunnubleFiter = nullptr;
 };
 
 #endif // COLORSELECTORFILTER_H

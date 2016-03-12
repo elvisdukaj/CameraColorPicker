@@ -12,16 +12,15 @@ ColorSelectorFilter::~ColorSelectorFilter()
 
 {
     qDebug() << this << ": ctor";
-    delete mRunnubleFiter;
 }
 
 QVideoFilterRunnable* ColorSelectorFilter::createFilterRunnable()
 {
-    mRunnubleFiter = new ColorSelectorFilterRunnable();
-    return mRunnubleFiter;
+    mRunnubleFiter = std::make_unique<ColorSelectorFilterRunnable>();
+    return mRunnubleFiter.get();
 }
 
 ColorSelectorFilterRunnable *ColorSelectorFilter::runnbleFilter() const
 {
-    return mRunnubleFiter;
+    return mRunnubleFiter.get();
 }
