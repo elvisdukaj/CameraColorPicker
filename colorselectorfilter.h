@@ -7,7 +7,7 @@
 class ColorSelectorFilterRunnable;
 
 class ColorSelectorFilter : public QAbstractVideoFilter {
-//    Q_OBJECT
+    Q_OBJECT
 
 public:
     ColorSelectorFilter(QObject* parent = nullptr);
@@ -18,7 +18,7 @@ public:
 
 private:
     friend class ColorSelectorFilterRunnable;
-    std::unique_ptr<ColorSelectorFilterRunnable> mRunnubleFiter = nullptr;
+    std::unique_ptr<ColorSelectorFilterRunnable> mRunnubleFiter;
 };
 
 #endif // COLORSELECTORFILTER_H

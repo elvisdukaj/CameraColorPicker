@@ -3,7 +3,7 @@
 #include <QDebug>
 
 ColorSelectorFilter::ColorSelectorFilter(QObject* parent)
-    : QAbstractVideoFilter(parent), mRunnubleFiter(std::make_unique<ColorSelectorFilterRunnable>())
+    : QAbstractVideoFilter(parent), mRunnubleFiter(nullptr)
 {
     qDebug() << this << ": ctor";
 }
@@ -15,7 +15,7 @@ ColorSelectorFilter::~ColorSelectorFilter()
 
 QVideoFilterRunnable* ColorSelectorFilter::createFilterRunnable()
 {
-//    mRunnubleFiter = std::make_unique<ColorSelectorFilterRunnable>();
+    mRunnubleFiter = std::make_unique<ColorSelectorFilterRunnable>();
     return mRunnubleFiter.get();
 }
 

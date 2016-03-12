@@ -15,6 +15,7 @@ Window {
         onColorFilterActiveChanged: {
             model.colorFilter = filter;
             model.onActived(mainForm.colorFilterActive);
+            slider.visible = mainForm.colorFilterActive;
         }
     }
 
