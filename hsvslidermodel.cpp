@@ -23,6 +23,7 @@ QObject *HSVSliderModel::colorFilter() const
 void HSVSliderModel::setColorFilter(QObject *filter)
 {
 	mFilter = filter;
+    updateFilter();
 }
 
 void HSVSliderModel::onLowerValueChanged(float lowerVal)
@@ -37,10 +38,15 @@ void HSVSliderModel::onUpperValueChanged(float upperVal)
 	updateFilter();
 }
 
-void HSVSliderModel::onRangeTypeChanged(HSVRangeType rangeType)
+void HSVSliderModel::onRangeTypeChanged(int rangeType)
 {
-	mColorFilterRange.rangeType = rangeType;
-	updateFilter();
+    mColorFilterRange.rangeType = rangeType == HSVSliderModel::Internal ? NormalizedHSVRange::Internal : NormalizedHSVRange::External;
+    updateFilter();
+}
+
+void HSVSliderModel::onActived(bool)
+{
+    updateFilter();
 }
 
 void HSVSliderModel::updateFilter()

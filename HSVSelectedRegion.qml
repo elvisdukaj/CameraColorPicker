@@ -3,8 +3,7 @@ import Elice.CameraColorSelector 1.0
 
 Item {
     property bool isInternal: true
-
-//    property int rangeType: HSVSliderModel.HSVRangeType
+    property int rangeType: HSVSliderModel.Internal
 
     property color borderColor: "lightgray"
 

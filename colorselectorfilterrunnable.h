@@ -5,6 +5,8 @@
 #include <memory>
 #include "hsvtype.h"
 
+class ColorSelectorFilterRunnableImpl;
+
 class ColorSelectorFilterRunnable : public QVideoFilterRunnable
 {
 public:
@@ -15,7 +17,6 @@ public:
 	void setColorRange(const NormalizedHSVRange& range);
 
 private:
-    friend class ColorSelectorFilterRunnableImpl;
     std::unique_ptr<ColorSelectorFilterRunnableImpl> mImpl;
 };
 

@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import Elice.CameraColorSelector 1.0
 
 Item {
     id: slider
@@ -7,8 +8,10 @@ Item {
 
     property alias lowerValue: range.lowerValue
     property alias upperValue: range.upperValue
+    property alias rangeType: selectedGradientRegion.rangeType
+
     property alias gredientBorderColor: selectedGradientRegion.borderColor
-    property alias isInternal: selectedGradientRegion.isInternal
+
 
     HSVGradient {
         id: gradient
@@ -31,7 +34,8 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                selectedGradientRegion.isInternal = !selectedGradientRegion.isInternal
+                selectedGradientRegion.isInternal = !selectedGradientRegion.isInternal;
+                selectedGradientRegion.rangeType = selectedGradientRegion.isInternal ? HSVSliderModel.Internal : HSVSliderModel.External;
             }
         }
     }

@@ -9,8 +9,8 @@ class ColorSelectorFilter;
 class HSVSliderModel : public QObject
 {
 	Q_OBJECT
+    Q_ENUMS(RangeType)
 	Q_PROPERTY(QObject* colorFilter READ colorFilter WRITE setColorFilter)
-	Q_ENUMS(HSVRangeType)
 
 public:
 	explicit HSVSliderModel(ColorSelectorFilter* filter = nullptr);
@@ -19,10 +19,17 @@ public:
 	QObject* colorFilter() const;
 	void setColorFilter(QObject* filter);
 
+    enum RangeType
+    {
+        Internal,
+        External
+    };
+
 public slots:
 	void onLowerValueChanged(float lowerVal);
 	void onUpperValueChanged(float upperVal);
-	void onRangeTypeChanged(enum HSVRangeType rangeType);
+    void onRangeTypeChanged(int rangeType);
+    void onActived(bool active);
 
 private:
 	void updateFilter();

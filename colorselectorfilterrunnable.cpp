@@ -21,7 +21,7 @@ struct HSVColorFilter
 {
 	HSVColorFilter( const cv::Vec3b lower,
 					const cv::Vec3b upper,
-					HSVRangeType rangeType = HSVRangeType::INTERNAL)
+                    NormalizedHSVRange::RangeType rangeType = NormalizedHSVRange::Internal)
 		: lower(lower), upper(upper), rangeType(rangeType)
 	{
     }
@@ -44,7 +44,7 @@ struct HSVColorFilter
 
     cv::Vec3b lower = cv::Vec3b(0, 0, 0);
 	cv::Vec3b upper = cv::Vec3b(180, 255, 255);
-	HSVRangeType rangeType = EXTERNAL;
+    NormalizedHSVRange::RangeType rangeType = NormalizedHSVRange::External;
 
 private:
     static const float HUE_FACTOR;
@@ -59,21 +59,23 @@ const float HSVColorFilter::VALUE_FACTOR = 255.0f;
 cv::Mat getMaskFromColorFilter(const cv::Mat& input, const HSVColorFilter& hsvFilter)
 {
 	cv::Mat result;
-	if (hsvFilter.rangeType == HSVRangeType::INTERNAL)
+    if (hsvFilter.rangeType == NormalizedHSVRange::Internal)
 	{
 		cv::inRange(input, hsvFilter.lower, hsvFilter.upper, result);
 	}
 	else
 	{
-		cv::Mat lowerRange, upperRange;
+        cv::Mat leftRange, rightRange;
 
-		cv::Vec3b toStart(180, hsvFilter.upper[1], hsvFilter.upper[2]);
-		cv::inRange(input, hsvFilter.lower, toStart, lowerRange);
+        cv::Vec3b fromStartLeft(0, hsvFilter.lower[1], hsvFilter.lower[2]);
+        cv::Vec3b toEndLeft(hsvFilter.lower[0], hsvFilter.upper[1], hsvFilter.upper[2]);
+        cv::inRange(input, fromStartLeft, toEndLeft, leftRange);
 
-		cv::Vec3b fromStart(1, hsvFilter.lower[1], hsvFilter.lower[2]);
-		cv::inRange(input, fromStart, hsvFilter.upper, upperRange);
+        cv::Vec3b fromStartRight(hsvFilter.upper[0], hsvFilter.lower[1], hsvFilter.lower[2]);
+        cv::Vec3b fromEndRight(180, hsvFilter.upper[1], hsvFilter.upper[2]);
+        cv::inRange(input, fromStartRight, fromEndRight, rightRange);
 
-		result = lowerRange + upperRange;
+        result = leftRange + rightRange;
 	}
 
 	return result;
@@ -82,14 +84,14 @@ cv::Mat getMaskFromColorFilter(const cv::Mat& input, const HSVColorFilter& hsvFi
 class ColorSelectorFilterRunnableImpl {
 public:
     ColorSelectorFilterRunnableImpl()
-        : mColorFilter(cv::Vec3b(0, 0, 0), cv::Vec3b(180, 255, 255), HSVRangeType::INTERNAL)
+        : mColorFilter(cv::Vec3b(0, 0, 0), cv::Vec3b(180, 255, 255), NormalizedHSVRange::Internal)
 	{
-        qDebug() << this << "ctor";
+        qDebug() << "ColorSelectorFilterRunnableImpl: ctor";
 	}
 
 	~ColorSelectorFilterRunnableImpl()
     {
-        qDebug() << this << ": dtor";
+        qDebug() << "ColorSelectorFilterRunnableImpl: dtor";
 	}
 
 	QVideoFrame run(QVideoFrame *input, const QVideoSurfaceFormat&, QVideoFilterRunnable::RunFlags)
@@ -128,7 +130,7 @@ public:
 	{
 		mColorFilter.lower  = HSVColorFilter::toOpenCV(range.lower);
 		mColorFilter.upper = HSVColorFilter::toOpenCV(range.upper);
-		mColorFilter.rangeType = range.rangeType;
+        mColorFilter.rangeType = range.rangeType;
 	}
 
 private:
@@ -136,14 +138,14 @@ private:
 };
 
 ColorSelectorFilterRunnable::ColorSelectorFilterRunnable()
-    : mImpl (new ColorSelectorFilterRunnableImpl())
+    : mImpl (std::make_unique<ColorSelectorFilterRunnableImpl>())
 {
-    qDebug() << this << ": ctor";
+    qDebug() << "ColorSelectorFilterRunnable: ctor";
 }
 
 ColorSelectorFilterRunnable::~ColorSelectorFilterRunnable()
 {
-    qDebug() << this << ": dctor";
+    qDebug() << "ColorSelectorFilterRunnable: dtor";
 }
 
 QVideoFrame ColorSelectorFilterRunnable::run(

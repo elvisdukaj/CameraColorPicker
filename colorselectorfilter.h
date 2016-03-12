@@ -7,7 +7,7 @@
 class ColorSelectorFilterRunnable;
 
 class ColorSelectorFilter : public QAbstractVideoFilter {
-    Q_OBJECT
+//    Q_OBJECT
 
 public:
     ColorSelectorFilter(QObject* parent = nullptr);

@@ -2,25 +2,24 @@
 #include "colorselectorfilterrunnable.h"
 #include <QDebug>
 
-ColorSelectorFilter::ColorSelectorFilter(QObject *parent)
-    :QAbstractVideoFilter(parent)
+ColorSelectorFilter::ColorSelectorFilter(QObject* parent)
+    : QAbstractVideoFilter(parent), mRunnubleFiter(std::make_unique<ColorSelectorFilterRunnable>())
 {
     qDebug() << this << ": ctor";
 }
 
 ColorSelectorFilter::~ColorSelectorFilter()
-
 {
-    qDebug() << this << ": ctor";
+    qDebug() << this << ": dtor";
 }
 
 QVideoFilterRunnable* ColorSelectorFilter::createFilterRunnable()
 {
-    mRunnubleFiter = std::make_unique<ColorSelectorFilterRunnable>();
+//    mRunnubleFiter = std::make_unique<ColorSelectorFilterRunnable>();
     return mRunnubleFiter.get();
 }
 
-ColorSelectorFilterRunnable *ColorSelectorFilter::runnbleFilter() const
+ColorSelectorFilterRunnable* ColorSelectorFilter::runnbleFilter() const
 {
     return mRunnubleFiter.get();
 }
