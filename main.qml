@@ -19,8 +19,6 @@ Window {
         anchors.right: parent.right
         anchors.top: parent.top
 
-        visible: form.colorFilterEnabled
-
         width: 300
         height: 50
         anchors.rightMargin: 7

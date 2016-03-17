@@ -5,7 +5,6 @@ import Elice.CameraColorSelector 1.0
 
 Item {
     property alias filter: colorFilter
-    property alias colorFilterEnabled: colorFilter.active
 
     Camera {
         id: camera
@@ -18,7 +17,6 @@ Item {
 
     ColorSelectorFilter {
         id: colorFilter
-        active: activeFilter.checked
     }
 
     VideoOutput {
@@ -27,16 +25,5 @@ Item {
         source: camera
         anchors.centerIn: parent;
         filters: [colorFilter]
-    }
-
-    GroupBox {
-        anchors.top: parent.top
-        anchors.left: parent.left
-
-        CheckBox {
-            id: activeFilter
-            text: "Filter active"
-            checked: false
-        }
     }
 }
